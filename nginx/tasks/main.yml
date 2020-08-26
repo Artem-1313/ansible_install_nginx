@@ -18,7 +18,7 @@
   notify: restart nginx
  
 - name: Set up HTML file
-  copy: src=files/index.html dest={{ site_page }}/index.html owner=www-data group=www-data mode=0644
+  copy: src=files/index.html dest={{ site_page }}/index.php owner=www-data group=www-data mode=0644
 
 - name: Set up Nginx file
   template: src=files/test.conf.j2 dest=/etc/nginx/sites-available/{{test_conf}}
