@@ -1,0 +1,6 @@
+- hosts: test
+  roles:
+    - nginx
+  vars:
+    site_page: /usr/share/nginx/html
+    test_conf: test.conf

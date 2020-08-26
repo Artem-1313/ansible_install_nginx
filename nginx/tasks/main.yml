@@ -1,0 +1,33 @@
+---
+- name: Update apt
+  apt: update_cache=yes
+  
+- name: Install Nginx
+  apt: name=nginx state=latest
+
+- name: remove 1
+  file:
+    path: "/etc/nginx/sites-available/default"
+    state: absent
+  notify: restart nginx
+
+- name: remove 2
+  file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
+  notify: restart nginx
+ 
+- name: Set up HTML file
+  copy: src=files/index.html dest={{ site_page }}/index.html owner=www-data group=www-data mode=0644
+
+- name: Set up Nginx file
+  template: src=files/test.conf.j2 dest=/etc/nginx/sites-available/{{test_conf}}
+  notify: restart nginx
+
+- name: enable sites
+  file: 
+    src: "/etc/nginx/sites-available/{{test_conf}}"
+    dest: "/etc/nginx/sites-enabled/{{test_conf}}"
+    state: link
+  notify: restart nginx
+

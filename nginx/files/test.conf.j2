@@ -1,0 +1,15 @@
+
+server {
+        listen 80;
+        root {{site_page}};
+        index index.html index.php;
+        server_name localhost;
+        location / {
+	proxy_pass http://localhost:8080;
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/password;
+	proxy_set_header   Authorization "";
+        }            
+}
+
+
